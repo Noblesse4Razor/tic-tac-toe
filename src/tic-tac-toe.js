@@ -18,7 +18,7 @@ class TicTacToe {
     }
 
     isFinished() {
-		return (this.getWinner!=null || this.noMoreTurns);
+		return (this.getWinner()!=null || this.noMoreTurns());
     }
 
     getWinner() {
@@ -52,7 +52,7 @@ class TicTacToe {
     }
 
     noMoreTurns() {
-        for (let i = 0; i < 2; i++)
+        for (let i = 0; i < 3; i++)
         {
             if(this.Field[i].some(x => x == null)) return false;
         }
@@ -60,7 +60,7 @@ class TicTacToe {
     }
 
     isDraw() {
-		
+		return this.noMoreTurns() && this.getWinner()===null;
     }
 
     getFieldValue(rowIndex, colIndex) {
