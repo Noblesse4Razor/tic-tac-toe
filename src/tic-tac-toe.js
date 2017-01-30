@@ -12,7 +12,7 @@ class TicTacToe {
     }
 
     nextTurn(rowIndex, columnIndex) {
-		if (this.Field[rowIndex][columnIndex] != null) return this.getCurrentPlayerSymbol();
+		if (this.Field[rowIndex][columnIndex] != null) return this.getCurrentPlayerSymbol;
 		this.Field[rowIndex][columnIndex] = this.Player;
 		this.Player = !this.Player;
     }
@@ -29,30 +29,34 @@ class TicTacToe {
        for(let i=0; i<matrix.length; i++){
           column.push(matrix[i][col]);
        }
-
        return column;
     }
 	
 	let F = this.Field;
 		
-		for (let i = 0; i < 2; i++)
+		for (let i = 0; i < 3; i++)
 		{
-			if (F[i].every(x=> x == true || x == false)) return F[i] ? 'x' : 'o';
+			if (F[i].every(x=> x == true) || F[i].every(x=>x == false)) return F[i] ? 'x' : 'o';
 		}
 		
-		for (let i = 0; i < 2; i++)
+		for (let i = 0; i < 3; i++)
 		{
-			if (getCol(F,i).every(x=> x == true || x == false)) return F[i] ? 'x' : 'o';
+			if (getCol(F,i).every(x=> x == true || getCol(F,i).every(x=>x == false))) return F[0][i] ? 'x' : 'o';
 		}
-		
-		if (F[0][0]==F[1][1]==F[2][2] || F[0][2] == F[1][1]== F[2][0]) return F[1][1] ? 'x' : 'o';
+
+		if(F[1][1]===null) return null;
+		if ( (F[0][0]===F[1][1]&& F[0][0]===F[2][2]) || (F[0][2] === F[1][1]&& F[0][2] === F[2][0])) return F[1][1] ? 'x' : 'o';
 		
 		return null;
 		
     }
 
     noMoreTurns() {
-		return !this.Field.some(x=>x==null);
+        for (let i = 0; i < 2; i++)
+        {
+            if(this.Field[i].some(x => x == null)) return false;
+        }
+        return true;
     }
 
     isDraw() {
@@ -60,6 +64,7 @@ class TicTacToe {
     }
 
     getFieldValue(rowIndex, colIndex) {
+        if (this.Field[rowIndex][colIndex]==null) return null;
 		return this.Field[rowIndex][colIndex] ? 'x' : 'o';
     }	
 }
